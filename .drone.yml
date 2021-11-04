@@ -16,7 +16,7 @@ steps:
         path: /root/.docker
     commands:
       - ls -al
-      - git diff --name-only
+      - git diff --name-only HEAD
       - for f in $(git diff --name-only); do
             echo "Changed $f";
             NS=$(echo "$f" | awk -F '/' '{print $1}');

@@ -17,7 +17,7 @@ steps:
     commands:
       - for f in $(git diff --name-only); do
             NS=$(echo "$f" | awk -F '/' '{print $1}');
-            if [ "$NS" = ".drone.yml" ]; continue; fi;
+            if [ "$NS" = ".drone.yml" ]; then continue; fi;
             NAME=$(echo "$f" | awk -F '/' '{print $2}');
             VER=$(echo "$f" | awk -F '/' '{print $3}' | sed -e 's/Dockerfile-/');
             TAG="$NS/$NAME:$VER";

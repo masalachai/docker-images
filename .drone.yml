@@ -27,6 +27,10 @@ steps:
             docker push "$TAG";
              \
         done
+    branch:
+      - master
+    event:
+      - push
 
 volumes:
   - name: dockersock

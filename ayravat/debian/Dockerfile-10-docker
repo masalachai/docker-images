@@ -3,4 +3,3 @@ FROM debian:10-slim
 RUN apt update --fix-missing \
 	&& DEBIAN_FRONTEND=noninteractive apt install -y git libssl-dev pkg-config docker-compose docker.io \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-

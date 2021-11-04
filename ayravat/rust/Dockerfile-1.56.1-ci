@@ -4,4 +4,3 @@ RUN apt update --fix-missing \
 	&& apt install -y git libssl-dev pkg-config \
 	&& rustup component add rustfmt clippy \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-

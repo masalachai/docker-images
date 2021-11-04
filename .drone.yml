@@ -1,0 +1,37 @@
+---
+kind: pipeline
+name: docker-images
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: buildimg
+    image: ayravat/debian:10-docker
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+      - name: dockerhome
+        path: /root/.docker
+    commands:
+      - for f in $(git diff --name-only) do; \
+            NS=$(echo "$f" | awk -F '/' '{print $1}');
+            if [ "$NS" = ".drone.yml" ]; continue; fi
+            NAME=$(echo "$f" | awk -F '/' '{print $2}');
+            VER=$(echo "$f" | awk -F '/' '{print $3}' | sed -e 's/Dockerfile-/');
+            TAG="$NS/$NAME:$VER";
+            docker build -t  --file "$f";
+            docker login;
+            docker push "$TAG";
+             \
+        done
+
+volumes:
+  - name: dockersock
+    host:
+      path: /var/run/docker.sock
+  - name: dockerhome
+    host:
+      path: /root/.docker
+...

@@ -16,6 +16,7 @@ steps:
         path: /root/.docker
     commands:
       - for f in $(git diff --name-only); do
+            echo "Changed $f";
             NS=$(echo "$f" | awk -F '/' '{print $1}');
             if [ "$NS" = ".drone.yml" ]; then continue; fi;
             NAME=$(echo "$f" | awk -F '/' '{print $2}');

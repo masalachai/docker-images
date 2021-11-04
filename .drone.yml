@@ -15,14 +15,15 @@ steps:
       - name: dockerhome
         path: /root/.docker
     commands:
+      - docker login
       - for f in $(git diff --name-only) do; \
             NS=$(echo "$f" | awk -F '/' '{print $1}');
             if [ "$NS" = ".drone.yml" ]; continue; fi
             NAME=$(echo "$f" | awk -F '/' '{print $2}');
             VER=$(echo "$f" | awk -F '/' '{print $3}' | sed -e 's/Dockerfile-/');
             TAG="$NS/$NAME:$VER";
+            echo "========== Building $TAG =========="
             docker build -t  --file "$f";
-            docker login;
             docker push "$TAG";
              \
         done

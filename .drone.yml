@@ -15,6 +15,7 @@ steps:
       - name: dockerhome
         path: /root/.docker
     commands:
+      - env
       - for f in $(git diff --name-only HEAD^); do
             NS=$(echo "$f" | awk -F '/' '{print $1}');
             if [ "$NS" = ".drone.yml" ]; then continue; fi;

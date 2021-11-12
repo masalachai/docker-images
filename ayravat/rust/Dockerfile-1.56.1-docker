@@ -1,0 +1,7 @@
+FROM rust:1.56.1-slim
+
+RUN apt update --fix-missing \
+        && DEBIAN_FRONTEND=noninteractive apt install -y git libssl-dev pkg-config docker-compose docker.io \
+		&& rustup component add rustfmt clippy \
+        && git clone --single-branch --branch 0.6.0 https://github.com/loanstreet/deploy-scripts $HOME/.deploy-scripts/0.6.0 \
+        && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -22,6 +22,27 @@ steps:
       event:
         - push
 
+  - name: notify
+    image: drillster/drone-email
+    environment:
+      PLUGIN_HOST:
+        from_secret: mail_host
+      PLUGIN_FROM:
+        from_secret: mail_sender
+      PLUGIN_FROM_NAME:
+        from_secret: mail_sender_name
+      PLUGIN_PORT:
+        from_secret: mail_port
+      PLUGIN_USERNAME:
+        from_secret: mail_user
+      PLUGIN_PASSWORD:
+        from_secret: mail_password
+      PLUGIN_RECIPIENTS:
+        from_secret: mail_recipients
+    when:
+      status:
+        - failure
+
 volumes:
   - name: dockersock
     host:

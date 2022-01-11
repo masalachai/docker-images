@@ -15,17 +15,7 @@ steps:
       - name: dockerhome
         path: /root/.docker
     commands:
-      - env
-      - for f in $(git diff --name-only HEAD^); do
-            NS=$(echo "$f" | awk -F '/' '{print $1}');
-            if [ "$NS" = ".drone.yml" ]; then continue; fi;
-            NAME=$(echo "$f" | awk -F '/' '{print $2}');
-            VER=$(echo "$f" | awk -F '/' '{print $3}' | sed -e 's/Dockerfile-//');
-            TAG="$NS/$NAME:$VER";
-            echo "========== Building $TAG ==========";
-            docker build -t $TAG -f "$f" .;
-            docker push "$TAG";
-        done
+      - sh build.sh
     branch:
       - master
     event:
